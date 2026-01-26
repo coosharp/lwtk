@@ -39,7 +39,7 @@ static void process_button_event(lw_btn_t * btn);
 /**********************
  *  STATIC VARIABLES
  **********************/
-static volatile uint32_t gsul_btn_tick = 0;
+static volatile uint32_t gsul_btn_ticks = 0;
 
 static lw_btn_t * gs_mempool = NULL;
 static lw_btn_t * free_list = NULL;     
@@ -215,7 +215,7 @@ void lw_btn_handler(void)
   */
 void lw_btn_increase_tick(uint32_t tick_period)
 {
-    gsul_btn_tick += tick_period;
+    gsul_btn_ticks += tick_period;
 }
 
 /**
@@ -269,7 +269,7 @@ static void process_button_event(lw_btn_t * btn)
 {
     if(!btn || btn->paused) return;
 
-    uint32_t now_tick = gsul_btn_tick;
+    uint32_t now_tick = gsul_btn_ticks;
     uint32_t elapsed_time = now_tick - btn->last_tick;
     btn->last_tick = now_tick;
 
