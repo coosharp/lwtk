@@ -20,11 +20,20 @@ extern "C" {
  *      INCLUDES
  *********************/
 #include <stdint.h>
+#include <string.h>
+#include <stdbool.h>
 /*********************
  *      DEFINES
  *********************/
+#define LW_TIMER_REPEAT_INFINITE     (-1)
+#define LW_TIMER_NO_TIMER_READY      0xFFFFFFFF
+
+#define LW_TIMER_MEMCPY(dst, src, size) memcpy(dst, src, size)
+#define LW_TIMER_MEMSET(buf, value, size) memset(buf, value, size)
+#define LW_TIMER_MEMMOVE(dst, src, size) memmove(dst, src, size)
+
 typedef struct lw_timer lw_timer_t;
-typedef void (* lw_timer_cb_t)(lw_timer_t * timer, void * user_data);
+typedef void (* lw_timer_cb_t)(lw_timer_t * timer);
 
 struct lw_timer
 {
