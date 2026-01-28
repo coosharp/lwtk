@@ -69,6 +69,22 @@ static inline uint32_t lw_timer_get_period(lw_timer_t * timer)
 {
     return timer->period;
 }
+
+void         lw_timer_init            (lw_timer_t * timer_buf, uint32_t buf_size);
+lw_timer_t * lw_timer_create          (lw_timer_cb_t timer_cb, uint32_t period, void * user_data);
+void         lw_timer_delete          (lw_timer_t * timer);
+void         lw_timer_increase_tick   (uint32_t tick_period);
+uint32_t     lw_timer_handler         (void);
+void         lw_timer_pause           (lw_timer_t * timer);
+void         lw_timer_resume          (lw_timer_t * timer);
+void         lw_timer_ready           (lw_timer_t * timer);
+void         lw_timer_reset           (lw_timer_t * timer);
+void         lw_timer_set_repeat_count(lw_timer_t * timer, int32_t repeat_count);
+void         lw_timer_set_auto_delete (lw_timer_t * timer, bool auto_delete);
+void         lw_timer_set_period      (lw_timer_t * timer, uint32_t period);
+void         lw_timer_set_callback    (lw_timer_t * timer, lw_timer_cb_t timer_cb);
+void         lw_timer_set_user_data   (lw_timer_t * timer,  void * user_data);
+
 /**********************
  *      MACROS
  **********************/
