@@ -211,12 +211,32 @@ static uint32_t get_timer_remaining_time(lw_timer_t * timer, uint32_t now_tick)
 
 static lw_timer_t * alloc_timer(void)
 {
+    if(!free_list)
+        return NULL;
 
+    lw_timer_t * self = free_list;
+    free_list = free_list->next;
+
+    self->next = used_list;
+    used_list = self;
+
+    return self;
 }
 
 static void free_timer(lw_timer_t * timer)
 {
+    lw_timer_t ** pp = &used_list;
 
+    while(*pp) {
+        if(*pp == timer) {
+            *pp = timer->next;   
+            break;
+        }
+        pp = &((*pp)->next);
+    }
+
+    timer->next = free_list;
+    free_list = timer;
 }
 
 
