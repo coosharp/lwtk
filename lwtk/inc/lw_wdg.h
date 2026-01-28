@@ -43,10 +43,11 @@ struct lw_wdg
 /**********************
 *  GLOBAL PROTOTYPES
  **********************/
-bool        lw_wdg_add      (lw_wdg_t * wdg, uint32_t timeout_ms, const char * name);
-bool        lw_wdg_remove   (lw_wdg_t * wdg);
-void        lw_wdg_reload   (lw_wdg_t * wdg);
-lw_wdg_t *  lw_wdg_handler  (void);
+void        lw_wdg_increase_tick(uint32_t tick_period);
+bool        lw_wdg_add          (lw_wdg_t * wdg, uint32_t timeout_ms, const char * name);
+bool        lw_wdg_remove       (lw_wdg_t * wdg);
+void        lw_wdg_reload       (lw_wdg_t * wdg);
+lw_wdg_t *  lw_wdg_handler      (void);
 /**********************
  *      MACROS
  **********************/
