@@ -61,7 +61,12 @@ static inline uint16_t lw_queue_get_count(lw_queue_t * q)
     return q->count;
 }
 
-
+void lw_queue_init         (lw_queue_t * q, uint8_t * buffer, uint16_t item_size, uint16_t capacity);
+bool lw_queue_send_front   (lw_queue_t * q, const void * item);
+bool lw_queue_send_back    (lw_queue_t * q, const void * item);
+bool lw_queue_receive_front(lw_queue_t * q, void * item);
+bool lw_queue_receive_back (lw_queue_t * q, void * item);
+void lw_queue_reset        (lw_queue_t * q);
 /**********************
  *      MACROS
  **********************/

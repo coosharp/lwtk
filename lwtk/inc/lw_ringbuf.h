@@ -73,28 +73,28 @@ static inline size_t lw_ringbuf_get_used(lw_ringbuf_t * self)
     return (self->write_pos - self->read_pos) & self->mask;
 }
 
-bool lw_ringbuf_init(lw_ringbuf_t * self, char * buf, size_t buf_size);
-void lw_ringbuf_reset(lw_ringbuf_t * self);
-bool lw_ringbuf_write_byte(lw_ringbuf_t * self, 
-                           char byte, 
-                           lw_ringbuf_write_mode_t mode);
-size_t lw_ringbuf_write(lw_ringbuf_t * self, 
-                        const char * data, 
-                        size_t len,
-                        lw_ringbuf_write_mode_t mode);
-bool lw_ringbuf_read_byte(lw_ringbuf_t * self, char * byte);
-size_t lw_ringbuf_read(lw_ringbuf_t * self, 
-                         char * data, 
-                         size_t len,
-                         lw_ringbuf_read_mode_t mode);
-size_t lw_ringbuf_peek(lw_ringbuf_t * self,
-                         size_t skip_cnt,
-                         char * data,
-                         size_t len);
-size_t lw_ringbuf_mark_read(lw_ringbuf_t * self, size_t len);
-size_t lw_ringbuf_mark_write(lw_ringbuf_t * self, size_t len);
-bool lw_ringbuf_find(const lw_ringbuf_t * self, const char * needle, size_t len, size_t start_offset, size_t * found_idx);
-size_t lw_ringbuf_get_free(lw_ringbuf_t * self);
+bool    lw_ringbuf_init      (lw_ringbuf_t * self, char * buf, size_t buf_size);
+void    lw_ringbuf_reset     (lw_ringbuf_t * self);
+bool    lw_ringbuf_write_byte(lw_ringbuf_t * self, 
+                              char byte, 
+                              lw_ringbuf_write_mode_t mode);
+size_t  lw_ringbuf_write     (lw_ringbuf_t * self, 
+                              const char * data, 
+                              size_t len,
+                              lw_ringbuf_write_mode_t mode);
+bool    lw_ringbuf_read_byte (lw_ringbuf_t * self, char * byte);
+size_t  lw_ringbuf_read      (lw_ringbuf_t * self, 
+                              char * data, 
+                              size_t len,
+                              lw_ringbuf_read_mode_t mode);
+size_t  lw_ringbuf_peek      (lw_ringbuf_t * self,
+                              size_t skip_cnt,
+                              char * data,
+                              size_t len);
+size_t  lw_ringbuf_mark_read (lw_ringbuf_t * self, size_t len);
+size_t  lw_ringbuf_mark_write(lw_ringbuf_t * self, size_t len);
+bool    lw_ringbuf_find      (const lw_ringbuf_t * self, const char * needle, size_t len, size_t start_offset, size_t * found_idx);
+size_t  lw_ringbuf_get_free  (lw_ringbuf_t * self);
 
 /**********************
  *      MACROS

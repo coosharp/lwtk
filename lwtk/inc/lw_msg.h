@@ -70,16 +70,16 @@ static inline void * lw_msg_get_user_data(lw_msg_t * self)
     return self->user_data;
 }
 
-void lw_msg_global_init(lw_msg_global_t * msg_buf, uint32_t buf_size);
-lw_msg_global_t * lw_msg_global_subscribe(uint32_t msg_id, lw_msg_cb_t callback, void * user_data);
-void lw_msg_global_unsubscribe(lw_msg_global_t * self);
-void lw_msg_global_publish(uint32_t msg_id);
+void              lw_msg_global_init            (lw_msg_global_t * msg_buf, uint32_t buf_size);
+lw_msg_global_t * lw_msg_global_subscribe       (uint32_t msg_id, lw_msg_cb_t callback, void * user_data);
+void              lw_msg_global_unsubscribe     (lw_msg_global_t * self);
+void              lw_msg_global_publish         (uint32_t msg_id);
 
-void lw_msg_object_init(lw_msg_object_t * obj);
-void lw_msg_object_add_event(lw_msg_object_t * obj, uint32_t msg_id, lw_msg_cb_t callback, void * user_data);
-void lw_msg_object_remove_event(lw_msg_object_t * obj, lw_msg_cb_t callback);
-void lw_msg_object_remove_all_event(lw_msg_object_t * obj);
-void lw_msg_object_send_event(lw_msg_object_t * obj, uint32_t msg_id);
+void              lw_msg_object_init            (lw_msg_object_t * obj);
+void              lw_msg_object_add_event       (lw_msg_object_t * obj, uint32_t msg_id, lw_msg_cb_t callback, void * user_data);
+void              lw_msg_object_remove_event    (lw_msg_object_t * obj, lw_msg_cb_t callback);
+void              lw_msg_object_remove_all_event(lw_msg_object_t * obj);
+void              lw_msg_object_send_event      (lw_msg_object_t * obj, uint32_t msg_id);
 /**********************
  *      MACROS
  **********************/
