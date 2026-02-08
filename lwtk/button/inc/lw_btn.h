@@ -1,12 +1,7 @@
 /**
-  ******************************************************************************
-  *
-  * @file    lw_btn.h
-  * @author  
-  * @brief   Header file of lw_btn module.
-  *
-  ******************************************************************************
-  **/
+ * @file lw_btn.h
+ *
+ */
   
 #ifndef _LW_BTN_H
 #define _LW_BTN_H
@@ -130,14 +125,11 @@ bool        lw_btn_add_event            (lw_btn_t * btn, lw_btn_event_t code, lw
 bool        lw_btn_remove_event         (lw_btn_t * btn, lw_btn_event_cb_t event_cb);
 void        lw_btn_pause                (lw_btn_t * btn);
 void        lw_btn_resume               (lw_btn_t * btn);
+void        lw_btn_long_long_press_en   (lw_btn_t * btn, bool enable);
 void        lw_btn_reset                (lw_btn_t * btn);
 void        lw_btn_handler              (void);
 void        lw_btn_increase_tick        (uint32_t tick_period);
 void        lw_btn_set_stop_processing  (lw_btn_t * btn, lw_btn_event_cb_t event_cb, bool stop_processing);
-
-/**********************
- *      MACROS
- **********************/
 
 
 

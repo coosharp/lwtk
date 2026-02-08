@@ -1,35 +1,12 @@
 /**
-  ******************************************************************************
-  *
-  * @file    lw_btn.c
-  * @author  
-  * @brief   
-  *
-  ******************************************************************************
-  * @attention
-  *
-  * 
-  *
-  ******************************************************************************
-  **/
-  
+ * @file lw_btn.c
+ *
+ */
   
 /*********************
  *      INCLUDES
  *********************/
 #include "lw_btn.h"
-/**********************
- *      MACROS
- **********************/
-
-/*********************
- *      DEFINES
- *********************/
-
-/**********************
- *   GLOBAL VARIABLES
- **********************/ 
-
 /**********************
  *  STATIC PROTOTYPES
  **********************/
@@ -39,11 +16,11 @@ static void process_button_event(lw_btn_t * btn);
 /**********************
  *  STATIC VARIABLES
  **********************/
-static volatile uint32_t gsul_btn_ticks = 0;
+static volatile uint32_t ulTicks = 0;
 
-static lw_btn_t * gs_mempool = NULL;
-static lw_btn_t * free_list = NULL;     
-static lw_btn_t * used_list = NULL;     
+static lw_btn_t * pMemPool = NULL;
+static lw_btn_t * pFreeList = NULL;     
+static lw_btn_t * pUsedList = NULL;     
 /**********************
  *   GLOBAL FUNCTIONS
  **********************/ 
@@ -54,17 +31,17 @@ static lw_btn_t * used_list = NULL;
   */
 void lw_btn_init(lw_btn_t * btn_buf, uint32_t buf_size)
 {
-    gs_mempool = btn_buf;
+    pMemPool = btn_buf;
     uint32_t btn_count = buf_size / sizeof(lw_btn_t);
 
-    LW_BTN_MEMSET(gs_mempool, 0, buf_size);
+    LW_BTN_MEMSET(pMemPool, 0, buf_size);
 
-    free_list = NULL;
-    used_list = NULL;
+    pFreeList = NULL;
+    pUsedList = NULL;
 
     for(uint32_t i = 0; i < btn_count; i++){
-        gs_mempool[i].next = free_list;
-        free_list = &gs_mempool[i];
+        pMemPool[i].next = pFreeList;
+        pFreeList = &pMemPool[i];
     }
 }
 
@@ -174,6 +151,11 @@ void lw_btn_resume(lw_btn_t * btn)
     btn->paused = false;
 }
 
+void lw_btn_long_long_press_en(lw_btn_t * btn, bool enable)
+{
+    btn->long_long_press_enable = enable;
+}
+
 /**
   * @brief  Reset the state of a button instance.
   * @param  btn: Pointer to the button instance.
@@ -202,7 +184,7 @@ void lw_btn_reset(lw_btn_t * btn)
   */
 void lw_btn_handler(void)
 {
-    lw_btn_t * p = used_list;
+    lw_btn_t * p = pUsedList;
     while(p) {
         process_button_event(p);
         p = p->next;
@@ -215,7 +197,7 @@ void lw_btn_handler(void)
   */
 void lw_btn_increase_tick(uint32_t tick_period)
 {
-    gsul_btn_ticks += tick_period;
+    ulTicks += tick_period;
 }
 
 /**
@@ -269,7 +251,7 @@ static void process_button_event(lw_btn_t * btn)
 {
     if(!btn || btn->paused) return;
 
-    uint32_t now_tick = gsul_btn_ticks;
+    uint32_t now_tick = ulTicks;
     uint32_t elapsed_time = now_tick - btn->last_tick;
     btn->last_tick = now_tick;
 
@@ -414,14 +396,14 @@ static void process_button_event(lw_btn_t * btn)
   */
 static lw_btn_t * alloc_btn(void)
 {
-    if(!free_list)
+    if(!pFreeList)
         return NULL;
 
-    lw_btn_t * btn = free_list;
-    free_list = free_list->next;
+    lw_btn_t * btn = pFreeList;
+    pFreeList = pFreeList->next;
 
-    btn->next = used_list;
-    used_list = btn;
+    btn->next = pUsedList;
+    pUsedList = btn;
 
     return btn;
 }
@@ -433,7 +415,7 @@ static lw_btn_t * alloc_btn(void)
   */
 static void free_btn(lw_btn_t * btn)
 {
-    lw_btn_t ** pp = &used_list;
+    lw_btn_t ** pp = &pUsedList;
 
     while(*pp) {
         if(*pp == btn) {
@@ -443,8 +425,8 @@ static void free_btn(lw_btn_t * btn)
         pp = &((*pp)->next);
     }
 
-    btn->next = free_list;
-    free_list = btn;
+    btn->next = pFreeList;
+    pFreeList = btn;
 }
 
 /******************************* (END OF FILE) *********************************/
