@@ -22,6 +22,7 @@ extern "C" {
  *      MACROS
  *********************/
 #define LW_CONSOLE_RX_BUF_SIZE         1024
+#define LW_CONSOLE_LINE_BUF_SIZE       128
 
 #define LW_CONSOLE_PROMPT              ">> "
 
@@ -43,7 +44,7 @@ extern "C" {
 /*********************
  *    DECLARATIONS
  *********************/
-
+typedef void (* lw_console_send_char_fn_t)(char ch);
 typedef int (* lw_console_command_fn_t)(int argc, char * argv[]);
 
 typedef struct lw_console_command lw_console_command_t;
@@ -58,6 +59,7 @@ struct lw_console_command
 /**********************
 *  GLOBAL PROTOTYPES
  **********************/
+void lw_console_init(lw_console_send_char_fn_t fn);
 void lw_console_loop(void);
 
 
